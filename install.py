@@ -4,7 +4,7 @@ import os
 print("An Online-Judge Date Crawler OJDC for Local Judge OALJ developed by kZime && Margatroid with ❤❤")
 fst = input("你想安装OJDC吗? (y/n， 默认为y)")
 if fst != 'n':
-    os.system('sudo cp cogs.py /usr/bin/oalj')
+    os.system('sudo cp cogs.py /usr/bin/cogs')
     os.system('sudo cp loj.py /usr/bin/loj')
     os.system('sudo cp syzoj.py /usr/bin/syzoj')
     ask = input("是否安装pip, axel以及库文件?(y/n, 默认为y)")
@@ -18,6 +18,6 @@ if fst != 'n':
 else:
     sec = input("你想卸载OJDC吗? (y/n, 默认为n)")
     if sec != 'n':
-        os.system('sudo rm cogs.py /usr/bin/oalj')
-        os.system('sudo rm loj.py /usr/bin/loj')
-        os.system('sudo rm syzoj.py /usr/bin/syzoj')
+        os.system('sudo rm /usr/bin/oalj')
+        os.system('sudo rm /usr/bin/loj')
+        os.system('sudo rm /usr/bin/syzoj')
