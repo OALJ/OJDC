@@ -11,8 +11,8 @@ if fst != 'n':
     if ask != 'n':
         os.system("sudo apt-get install python3-pip")
         os.system("sudo apt-get install axel")
-        os.system("sudo pip3 install urllib3[socks]")
-        os.system("sudo pip3 install requests[socks]")
+        os.system("sudo pip3 install 'urllib3[socks]'")
+        os.system("sudo pip3 install 'requests[socks]'")
         os.system("sudo pip3 install colorama")
         os.system("sudo pip3 install requests")
         os.system("sudo pip3 install psutil")
