@@ -27,7 +27,7 @@ $ cogs   # 获取cogs上题目的数据，根据引导使用
 
 配合OALJ使用效果如图:
 
-![cogs](./cogs.gif)
+![cogs.gif](https://i.loli.net/2017/09/28/59cc8964c2589.gif)
 
 ```
 TODO LIST:
