@@ -12,12 +12,13 @@ if fst != 'n':
         os.system("sudo apt-get install python3-pip")
         os.system("sudo apt-get install axel")
         os.system("sudo pip3 install urllib3[socks]")
+        os.system("sudo pip3 install requests[socks]")
         os.system("sudo pip3 install colorama")
         os.system("sudo pip3 install requests")
         os.system("sudo pip3 install psutil")
 else:
     sec = input("你想卸载OJDC吗? (y/n, 默认为n)")
     if sec != 'n':
-        os.system('sudo rm /usr/bin/oalj')
         os.system('sudo rm /usr/bin/loj')
+        os.system('sudo rm /usr/bin/cogs')
         os.system('sudo rm /usr/bin/syzoj')
