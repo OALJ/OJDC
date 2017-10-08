@@ -8,7 +8,8 @@ port = ":8080" # 端口修好后改为 ""
 if __name__ == '__main__':
     if "-i" in sys.argv:
         id = sys.argv[sys.argv.index("-i") + 1]
-    elif 
+    elif len(sys.argv) == 2:
+        id = sys.argv[1]
     else :
         id = (input("请输入题目编号(COGS): "))
     Url = 'http://cogs.pro' + port + '/cogs/problem/problem.php?pid={0}'.format(id)
