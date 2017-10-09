@@ -36,8 +36,8 @@ if __name__ == '__main__':
         AnsFlieName = DateName + str(i) + '.ans'
         InputFlieUrl = "http://cogs.pro" + port + "/cogs/problem/QuiXplorer/index.php\?action\=download\&dir\={0}\&item\={1}\&order\=name\&srt\=yes".format(DateName, InputFlieName)
         AnsFlieUrl = "http://cogs.pro" + port + "/cogs/problem/QuiXplorer/index.php\?action\=download\&dir\={0}\&item\={1}\&order\=name\&srt\=yes".format(DateName, AnsFlieName)
-        os.system("aria2c {0} -o data/{1} &> /dev/null".format(InputFlieUrl, InputFlieName))
-        os.system("aria2c {0} -o data/{1} &> /dev/null".format(AnsFlieUrl, AnsFlieName))
+        os.system("aria2c -q {0} -o data/{1} &> /dev/null".format(InputFlieUrl, InputFlieName))
+        os.system("aria2c -q {0} -o data/{1} &> /dev/null".format(AnsFlieUrl, AnsFlieName))
     # config.txt
 
     # FileName
