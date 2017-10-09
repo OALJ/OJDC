@@ -4,7 +4,7 @@ import sys
 import os
 
 port = ":8080" # 端口修好后改为 ""
-
+cogsUrl = "218.28.19.228"
 if __name__ == '__main__':
     if "-i" in sys.argv:
         id = sys.argv[sys.argv.index("-i") + 1]
@@ -12,7 +12,7 @@ if __name__ == '__main__':
         id = sys.argv[1]
     else :
         id = (input("请输入题目编号(COGS): "))
-    Url = 'http://cogs.pro' + port + '/cogs/problem/problem.php?pid={0}'.format(id)
+    Url = 'http://' + cogsUrl + port + '/cogs/problem/problem.php?pid={0}'.format(id)
     Page = requests.get(Url)
     html = str(Page.content)
     try:
@@ -34,8 +34,8 @@ if __name__ == '__main__':
         print("正在下载第{0}组数据quq...".format(i))
         InputFlieName = DateName + str(i) + '.in'
         AnsFlieName = DateName + str(i) + '.ans'
-        InputFlieUrl = "http://cogs.pro" + port + "/cogs/problem/QuiXplorer/index.php\?action\=download\&dir\={0}\&item\={1}\&order\=name\&srt\=yes".format(DateName, InputFlieName)
-        AnsFlieUrl = "http://cogs.pro" + port + "/cogs/problem/QuiXplorer/index.php\?action\=download\&dir\={0}\&item\={1}\&order\=name\&srt\=yes".format(DateName, AnsFlieName)
+        InputFlieUrl = "http://" + cogsUrl + port + "/cogs/problem/QuiXplorer/index.php\?action\=download\&dir\={0}\&item\={1}\&order\=name\&srt\=yes".format(DateName, InputFlieName)
+        AnsFlieUrl = "http://" + cogsUrl + port + "/cogs/problem/QuiXplorer/index.php\?action\=download\&dir\={0}\&item\={1}\&order\=name\&srt\=yes".format(DateName, AnsFlieName)
         os.system("aria2c -q {0} -o data/{1} &> /dev/null".format(InputFlieUrl, InputFlieName))
         os.system("aria2c -q {0} -o data/{1} &> /dev/null".format(AnsFlieUrl, AnsFlieName))
     # config.txt
