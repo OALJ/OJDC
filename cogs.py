@@ -11,60 +11,45 @@ if __name__ == '__main__':
     elif len(sys.argv) == 2:
         id = sys.argv[1]
     else :
-        id = (input("请输入题目编号(COGS): "))
+        id = input("题目id: ")
     Url = 'http://' + cogsUrl + port + '/cogs/problem/problem.php?pid={0}'.format(id)
     Page = requests.get(Url)
     html = str(Page.content)
     try:
         CanBeSolve = html.split('badge badge-success\\\'>')[1].split('<')[0]
-        print("此题是否可做: 裆燃啦!")
     except IndexError:
-        print("ZLJ!此题不可做!")
+        print("错误!! 该题不可做!!")
         exit()
 
-    DateCnt = int(html.split('badge badge-success\\\'>')[1].split('<')[0])
-    DateName = html.split('<td><code>')[1].split('.')[0]
+    DataCnt = int(html.split('badge badge-success\\\'>')[1].split('<')[0])
+    DataName = html.split('<td><code>')[1].split('.')[0]
     Time = html.split(' s)')[0].split(' ms (')[1]
     Memory = html.split(' MB')[0].split('</th>\\n<td>')[-1]
-    print("题目名称: {0}\n测试点数目: {1}".format(DateName, DateCnt))
-
     os.system("rm -rf data")
     os.system("mkdir data")
-    for i in range(1, DateCnt + 1):
-        print("正在下载第{0}组数据quq...".format(i))
-        InputFlieName = DateName + str(i) + '.in'
-        AnsFlieName = DateName + str(i) + '.ans'
-        InputFlieUrl = "http://" + cogsUrl + port + "/cogs/problem/QuiXplorer/index.php\?action\=download\&dir\={0}\&item\={1}\&order\=name\&srt\=yes".format(DateName, InputFlieName)
-        AnsFlieUrl = "http://" + cogsUrl + port + "/cogs/problem/QuiXplorer/index.php\?action\=download\&dir\={0}\&item\={1}\&order\=name\&srt\=yes".format(DateName, AnsFlieName)
+    for i in range(1, DataCnt + 1):
+        sys.stdout.write("\r下载进度 {0}%".format(int(float(i / DataCnt) * 100)))
+        sys.stdout.flush()
+        InputFlieName = DataName + str(i) + '.in'
+        AnsFlieName = DataName + str(i) + '.ans'
+        InputFlieUrl = "http://" + cogsUrl + port + "/cogs/problem/QuiXplorer/index.php\?action\=download\&dir\={0}\&item\={1}\&order\=name\&srt\=yes".format(DataName, InputFlieName)
+        AnsFlieUrl = "http://" + cogsUrl + port + "/cogs/problem/QuiXplorer/index.php\?action\=download\&dir\={0}\&item\={1}\&order\=name\&srt\=yes".format(DataName, AnsFlieName)
         os.system("aria2c -q {0} -o data/{1} &> /dev/null".format(InputFlieUrl, InputFlieName))
         os.system("aria2c -q {0} -o data/{1} &> /dev/null".format(AnsFlieUrl, AnsFlieName))
-    # config.txt
 
-    # FileName
-    FileName = "test.cpp"
-    os.system("rm temp 2> /dev/null")
-    os.system("ls > temp")
-    with open("temp", "r") as ls:
-        for line in ls:
-            try:
-                temp = line.split('.')[1]
-            except IndexError:
-                continue
-            if temp == 'cpp\n':
-                FileName = line.rstrip()
-    os.system("rm temp 2> /dev/null")
-
-    Time = int(float(Time) * 1000)
-    print("FileName: {0}\nTime: {1}\nMemory: {2}".format(FileName, Time, Memory))
-    print("正在生成配置文件...")
-    with open("config.txt", "w") as Config:
-        Config.write("File Name: {0}\n".format(FileName))
-        Config.write("Input Name: {0}\n".format(DateName + '#.in'))
-        Config.write("Output Name: {0}\n".format(DateName + '#.ans'))
-        temp = "#: "
-        for i in range(1, DateCnt + 1):
-            temp += str(i) + ' '
-        Config.write(temp + '\n')
-        Config.write("Max Running Time: {0}\n".format(Time))
-        Config.write("Max Running Memory: {0}".format(Memory))
-    print("配置文件生成完成啦，在当前目录下执行oalj即可评测啦")
+    print("\n下载完成")
+    FileName = input("待评测文件名:")
+    print("正在生成config.json")
+    with open("config.json", "w") as Config:
+        Config.write('{' + "\n  \"Source\": \"{0}\",\n".format(FileName))
+        Config.write("  \"Input\": \"{0}\",\n".format(DataName + '#.in'))
+        Config.write("  \"Output\": \"{0}\",\n".format(DataName + '#.ans'))
+        temp = "  \"#\": ["
+        for i in range(1, DataCnt + 1):
+            temp += str(i)
+            if i != DataCnt:
+                temp += ', '
+        Config.write(temp + '],\n')
+        Config.write("  \"Time Limit\": \"{0}\",\n".format(Time))
+        Config.write("  \"Memory Limit\": \"{0}\"\n".format(Memory) + '}\n')
+    print("config.json生成完成")
